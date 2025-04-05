@@ -20,23 +20,25 @@ Route::get('/posts/add', [PostController::class, 'addPost']);
 Route::get('/posts/{post}', [PostController::class, 'getPost']);
 
 Route::get('/prueba', function () {
+
     /*
         //Crear un nuevo post
-
         $post = new Post;
 
-        $post->title = 'Título de prueba 3';
-        $post->content = 'Contenido de prueba 3';
-        $post->categoria = 'Categoría de prueba 3';
+        $post->title = 'TítuLO dE prUeba 5';
+        $post->content = 'Contenido de prueba 5';
+        $post->categoria = 'Categoría de prueba 5';
 
         $post->save();
     
-    */
-    /*
-        Buscar post a través del Id
+        */
 
-        $post = Post::find(2);
-    */
+    //Buscar post a través del Id
+
+    $post = Post::find(1);
+    // return $post->published_at->format('d-m-Y');
+    dd($post->is_active);
+    return $post->is_active;
 
     /*
         Actualizar registro tras buscar post a través de un campo
@@ -80,9 +82,9 @@ Route::get('/prueba', function () {
      * $post = Post::find(2);
      * $post->delete();
      */
-    
 
-    $post2 = Post::all();
 
-    return $post2;
+    // $post2 = Post::all();
+
+    // return $post2;
 });
