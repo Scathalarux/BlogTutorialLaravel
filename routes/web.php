@@ -13,13 +13,19 @@ use App\Models\Post;
  */
 Route::get('/', HomeController::class);
 
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
-Route::get('/posts/add', [PostController::class, 'addPost']);
+Route::get('/posts/add', [PostController::class, 'showAddPost'])->name('posts.showAddPost');
+Route::post('/posts/add', [PostController::class, 'doAddPost'])->name('posts.doAddPost');
 
-Route::get('/posts/{post}', [PostController::class, 'getPost']);
+Route::get('/posts/edit/{post}', [PostController::class, 'showEditPost'])->name('posts.showEditPost');
+Route::put('/posts/edit/{post}', [PostController::class, 'doEditPost'])->name('posts.doEditPost');
 
-Route::get('/prueba', function () {
+Route::get('/posts/{post}', [PostController::class, 'getPost'])->name('posts.getPost');
+
+Route::delete('/posts/delete/{post}', [PostController::class, 'deletePost'])->name('posts.deletePost');
+
+// Route::get('/prueba', function () {
 
     /*
         //Crear un nuevo post
@@ -35,10 +41,10 @@ Route::get('/prueba', function () {
 
     //Buscar post a través del Id
 
-    $post = Post::find(1);
+    // $post = Post::find(1);
     // return $post->published_at->format('d-m-Y');
-    dd($post->is_active);
-    return $post->is_active;
+    // dd($post->is_active);
+    // return $post->is_active;
 
     /*
         Actualizar registro tras buscar post a través de un campo
@@ -87,4 +93,4 @@ Route::get('/prueba', function () {
     // $post2 = Post::all();
 
     // return $post2;
-});
+// });

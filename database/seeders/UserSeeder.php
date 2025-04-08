@@ -23,12 +23,14 @@ class UserSeeder extends Seeder
 
         $user->save();
 
-        $user = new User();
+        // $user = new User();
 
-        $user->name = 'Lara2';
-        $user->email = 'lara2@mail.com';
-        $user->password = bcrypt('abc123.');
+        // $user->name = 'Lara2';
+        // $user->email = 'lara2@mail.com';
+        // $user->password = bcrypt('abc123.');
 
-        $user->save();
+        // $user->save();
+
+        User::factory(10)->create();
     }
 }

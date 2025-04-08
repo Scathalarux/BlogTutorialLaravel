@@ -9,31 +9,25 @@
 </head>
 
 <body>
-    {{-- <h1>Aquí se mostrará el contenido del post <?php echo $post; ?></h1> --}}
+    {{-- <h1>Aquí se mostrará el contenido del post <?php echo $post ?></h1> --}}
     {{-- <h1>Aquí se mostrará el contenido del post <?= $post ?></h1> --}}
-    <h1>Aquí se mostrará el contenido del post {{ $post }}</h1>
+    <a href="{{route('posts.index')}}">Volver a posts</a>
+    
+    <h1>Título: {{ $post->title }}</h1>
+    <p>
+        <strong>Categoría: </strong>{{$post->category}}
+    </p>
+    <p>
+        {{$post->content}}
+    </p>
 
-    {{-- @if (true)
-        <p>Contenido de prueba</p>
-    @endif
-
-    @if (true)
-        <p>Contenido de prueba1</p>
-    @else
-        <p>Contenido de prueba2</p>
-    @endif
-
-    @switch($type)
-        @case(1)
-            
-            @break
-        @case(2)
-            
-            @break
-        @default
-            
-    @endswitch --}}
-
+    <a href="{{route('posts.showEditPost', $post->id)}}">Editar post</a>
+    <form action="{{route('posts.deletePost',$post->id)}}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Eliminar post</button>
+    </form>
+    
 </body>
 
 </html>
