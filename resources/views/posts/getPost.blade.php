@@ -20,9 +20,12 @@
     <p>
         {{$post->content}}
     </p>
+    <p>
+        Slug: {{$post->slug}}
+    </p>
 
-    <a href="{{route('posts.showEditPost', $post->id)}}">Editar post</a>
-    <form action="{{route('posts.deletePost',$post->id)}}" method="POST">
+    <a href="{{route('posts.showEditPost', $post)}}">Editar post</a>
+    <form action="{{route('posts.deletePost',$post)}}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit">Eliminar post</button>

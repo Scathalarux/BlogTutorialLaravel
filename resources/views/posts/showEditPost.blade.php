@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Formulario para editar un post</h1>
-    <form action="{{route('posts.doEditPost', $post->id)}}" method="POST">
+    <form action="{{route('posts.doEditPost', $post)}}" method="POST">
         @csrf
         @method('PUT')
         <label>Título: 
@@ -21,6 +21,10 @@
         <br><br>
         <label>Contenido: 
             <textarea name="content">{{$post->content}}</textarea>
+        </label>
+        <br><br>
+        <label>Slug: 
+            <input type="text" name='slug' value="{{$post->slug}}">
         </label>
         <br><br>
         <button type="submit">Editar post</button>

@@ -25,6 +25,32 @@ Route::get('/posts/{post}', [PostController::class, 'getPost'])->name('posts.get
 
 Route::delete('/posts/delete/{post}', [PostController::class, 'deletePost'])->name('posts.deletePost');
 
+/**
+ * Podríamos utilizar 
+ * "Route::resource('posts',PostController::class)" 
+ * para que Laravel interprete que queremos hacer un CRUD y nombre los métodos según la convención. 
+ * Pero para ello, deberíamos nombrar los métodos según la misma [index, store, create, show, update, destroy, edit]
+ * 
+ *  - Si no queremos que se creen todas las rutas:
+ *      Route::resource('posts',PostController::class)->except('destroy');
+ *      Route::resource('posts',PostController::class)->except(['destroy','edit']);
+ * 
+ *  - Si queremos que se cree SOLO una/unas rutas determinadas:
+ *      Route::resource('posts',PostController::class)->only(['index','create','store']);
+ * 
+ *  - Si queremos utilizar rutas con nombre:
+ *      Route::resource('articulos',PostController::class)->names('post')
+ * 
+ *  - Si queremos utilizar rutas con nombre pero además indicando el nombre del parámetro ({post}) utilizado:
+ *      Route::resource('articulos',PostController::class)->parameters(['articulos'=>'posts'])->names('post')
+ * 
+ * 
+ * Podríamos utilizar
+ * "Route::apiResource('posts',PostController::class)" 
+ * para generar las rutas necesarias para ser un CRUD a nivel de API (equivalente a ->except(['create','edit']))
+ */
+
+
 // Route::get('/prueba', function () {
 
     /*

@@ -31,58 +31,118 @@ class PostController extends Controller
 
     public function doAddPost(Request $request)
     {
-        $post = new Post();
+        /**
+         * Alternativa 1
+         */
+        // $post = new Post();
+        // $post->title = $request->title;
+        // $post->category = $request->category;
+        // $post->content = $request->content;
+        // $post->slug = $request->slug;
+        // $post->save();
 
-        $post->title = $request->title;
-        $post->category = $request->category;
-        $post->content = $request->content;
-        $post->save();
-        return redirect('/posts');
+        /**
+         * ALternativa 2 (asignación masiva)
+         */
+        // Post::create([
+        //     'title' => $request->title,
+        //     'category' => $request->category,
+        //     'content' => $request->content,
+        //     'slug' => $request->slug
+        // ]);
+
+        /**
+         * Alternativa 3 (asignación masiva)
+         */
+        Post::create($request->all());
+
+        
+        return redirect()->route('posts.index');
     }
 
 
-    public function showEditPost($post)
+    // public function showEditPost($post)
+    // {
+    //     $post = Post::find($post);
+    //     return view('posts.showEditPost', compact('post'));
+    // }
+
+    /**
+     * Como Laravel intrepreta que el valor que se le pasa es el ID, podemos indicarle que busque
+     * directamente en la tabla teniendo en cuenta esto último. Para ello introduciríamos el nombre del modelo
+     */
+    public function showEditPost(Post $post)
     {
-        $post = Post::find($post);
         return view('posts.showEditPost', compact('post'));
     }
 
 
-    public function doEditPost(Request $request, $post) {
+    // public function doEditPost(Request $request, $post) {
         
-        $post = Post::find($post);
+    //     $post = Post::find($post);
 
-        $post->title = $request->title;
-        $post->category = $request->category;
-        $post->content = $request->content;
-        $post->save();
+    //     $post->title = $request->title;
+    //     $post->category = $request->category;
+    //     $post->content = $request->content;
+    //     $post->save();
 
-        return redirect("/posts/{$post->id}");
+    //     return redirect("/posts/{$post->id}");
+    // }
+
+    public function doEditPost(Request $request, Post $post) {
+
+        /**
+         * Alternativa 1
+         */
+        // $post->title = $request->title;
+        // $post->category = $request->category;
+        // $post->content = $request->content;
+        // $post->slug = $request->slug;
+        // $post->save();
+
+        /**
+         * Alternativa 2
+         * El método 'update' también sirve para editar utilizando la asignación masiva
+         */
+        $post->update($request->all());
+
+        return redirect()->route('posts.getPost', $post);
     }
 
 
 
 
-    public function getPost($post)
+    // public function getPost($post)
+    // {
+    //     //buscamos el post con el id que nos pasan como parámetro en la BD
+    //     $post = Post::find($post);
+
+
+    //     //versión tradicional
+    //     // return view('posts.getPost',[
+    //     //     'post' => $post
+    //     // ]);
+
+    //     //alternativa
+    //     //compact('post') es equivalente a crear el array ['post'=>$post]
+    //     return view('posts.getPost', compact('post'));
+    // }
+
+    public function getPost(Post $post)
     {
-        //buscamos el post con el id que nos pasan como parámetro en la BD
-        $post = Post::find($post);
-
-
-        //versión tradicional
-        // return view('posts.getPost',[
-        //     'post' => $post
-        // ]);
-
-        //alternativa
-        //compact('post') es equivalente a crear el array ['post'=>$post]
         return view('posts.getPost', compact('post'));
     }
 
-    public function deletePost($post){
-        $post = Post::find($post);
+    // public function deletePost($post){
+    //     $post = Post::find($post);
+    //     $post->delete();
+
+    //     return redirect('/posts');
+    // }
+
+    public function deletePost(Post $post){
         $post->delete();
 
-        return redirect('/posts');
+        return redirect()->route('posts.index');
     }
 }

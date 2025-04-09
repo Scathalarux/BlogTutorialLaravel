@@ -22,6 +22,10 @@
             <textarea name="content"></textarea>
         </label>
         <br><br>
+        <label>Slug: 
+            <input type="text" name='slug'>
+        </label>
+        <br><br>
         <button type="submit">Crear post</button>
     </form>
 </body>

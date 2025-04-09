@@ -12,6 +12,18 @@ class Post extends Model
     use HasFactory;
 
     /**
+     * Propiedad que permite activar la asignación masiva
+     * Especifica el nombre de todos los campos que se van a permitir asignar en 'Asignación masiva'
+     */
+    protected $fillable= ['title', 'slug', 'category', 'content', 'published_at'];
+
+    /**
+     * Propiedad que permite activar la asignación masiva
+     * Especifica el nombre de los campos que se van a EVITAR en la 'Asignación masiva'
+     */
+    protected $guarded = ['is_active'];
+
+    /**
      * Por convención, si no indicamos la tabla, interpreta que es la tabla con mismo nombre (minúsculas)
      * y en plural: posts
      * IMPORTANTE: el idioma usado para la convención es el INGLÉS
@@ -49,5 +61,16 @@ class Post extends Model
                 return ucfirst($value);
             }
         );
+    }
+
+    /**
+     * Método creado para que el Route Model Binding utilice otro campo en lugar del id.
+     * Retornará un string, que será el del nombre del campo que queremos que utilice en su búsqueda 'interpretada'
+     * 
+     * Útil utilizar 'slug' ya que optimiza el SEO
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

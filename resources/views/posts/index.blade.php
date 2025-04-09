@@ -8,7 +8,11 @@
     <ul>
         @foreach ($posts as $post)
         <li>
-            <a href="{{route('posts.getPost', $post->id)}}">
+            {{-- <a href="{{route('posts.getPost', $post->id)}}">
+                {{$post->title}}
+            </a> --}}
+            {{-- Si no introducimos el campo, interpretará que queremos el ID --}}
+            <a href="{{route('posts.getPost', $post)}}">
                 {{$post->title}}
             </a>
         </li>  
