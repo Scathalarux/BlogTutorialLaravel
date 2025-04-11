@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DoAddPostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use function Ramsey\Uuid\v1;
@@ -29,8 +30,26 @@ class PostController extends Controller
     }
 
 
-    public function doAddPost(Request $request)
+    public function doAddPost(DoAddPostRequest $request)
     {
+        /**
+         * Validación de datos recibidos (1º array)
+         * En el segundo array mostraríamos los mensajes de error personalizados
+         * En el tercer array podemos introducir el cambio del nombre de los atributos
+         */
+        /*$request->validate([
+            // Dos formas de incluir los requisitos de la validación
+            'title'=>'required|min:5|max:255',
+            'slug'=>['required','unique:post'],
+            'content'=>'required',
+            'category'=>'required'
+        ],[
+            'title.required'=>'El :attribute es obligatorio'
+        ],[
+            'title'=> 'name'
+        ]);*/
+
+
         /**
          * Alternativa 1
          */
@@ -91,6 +110,13 @@ class PostController extends Controller
 
     public function doEditPost(Request $request, Post $post) {
 
+        $request->validate([
+            'title'=>'required|min:5|max:255',
+            // En la edición debemos comprobar que sea único en la tabla, exceptuando el propio post
+            'category'=>'required',
+            'content'=>'required',
+            'slug'=>['required',"unique:post,slug,{$post->id}"]
+        ]);
         /**
          * Alternativa 1
          */
