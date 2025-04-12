@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DoAddPostRequest;
+use App\Mail\PostCreateMail;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Mail;
 use function Ramsey\Uuid\v1;
 
 class PostController extends Controller
@@ -73,9 +75,12 @@ class PostController extends Controller
         /**
          * Alternativa 3 (asignación masiva)
          */
-        Post::create($request->all());
+        $post = Post::create($request->all());
 
-        
+        //Enviamos un email
+        Mail::to('prueba@prueba.com')->send(new PostCreateMail($post));
+
+
         return redirect()->route('posts.index');
     }
 
@@ -97,7 +102,7 @@ class PostController extends Controller
 
 
     // public function doEditPost(Request $request, $post) {
-        
+
     //     $post = Post::find($post);
 
     //     $post->title = $request->title;
@@ -108,14 +113,15 @@ class PostController extends Controller
     //     return redirect("/posts/{$post->id}");
     // }
 
-    public function doEditPost(Request $request, Post $post) {
+    public function doEditPost(Request $request, Post $post)
+    {
 
         $request->validate([
-            'title'=>'required|min:5|max:255',
+            'title' => 'required|min:5|max:255',
             // En la edición debemos comprobar que sea único en la tabla, exceptuando el propio post
-            'category'=>'required',
-            'content'=>'required',
-            'slug'=>['required',"unique:post,slug,{$post->id}"]
+            'category' => 'required',
+            'content' => 'required',
+            'slug' => ['required', "unique:post,slug,{$post->id}"]
         ]);
         /**
          * Alternativa 1
@@ -166,7 +172,8 @@ class PostController extends Controller
     //     return redirect('/posts');
     // }
 
-    public function deletePost(Post $post){
+    public function deletePost(Post $post)
+    {
         $post->delete();
 
         return redirect()->route('posts.index');

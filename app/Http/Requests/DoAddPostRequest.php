@@ -23,7 +23,7 @@ class DoAddPostRequest extends FormRequest
     {
         return [
             'title'=>'required|min:5|max:255',
-            'slug'=>['required','unique:post'],
+            'slug'=>['required','unique:posts'],
             'content'=>'required',
             'category'=>'required'
         ];

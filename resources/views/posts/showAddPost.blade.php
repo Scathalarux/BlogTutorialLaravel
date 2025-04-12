@@ -10,6 +10,7 @@
 
 <body>
     <h1>Formulario para crear un post</h1>
+
     {{-- Alternativa 1 para mostrar los errores --}}
     {{-- @if ($errors->any())
         <div>
